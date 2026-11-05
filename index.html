@@ -1,1574 +1,519 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#07152f">
-<title>National Mathematics Day | Montessori Indus Residential School</title>
-
-<style>
-:root {
-  --navy:#07152f;
-  --navy2:#10264b;
-  --gold:#f7c85b;
-  --saffron:#ff963d;
-  --white:#fff;
-  --green:#31c48d;
-}
-
-* {
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-html,body {
-  width:100%;
-  min-height:100%;
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--navy);
-  color:white;
-}
-
-body {
-  overflow-x:hidden;
-}
-
-button {
-  font-family:inherit;
-}
-
-/* ANIMATED BACKGROUND */
-
-.background {
-  position:fixed;
-  inset:0;
-  z-index:0;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 15% 20%,rgba(255,177,65,.19),transparent 28%),
-    radial-gradient(circle at 85% 75%,rgba(38,194,173,.16),transparent 30%),
-    linear-gradient(135deg,#06132d,#102d58 55%,#07152f);
-}
-
-.background::before {
-  content:"";
-  position:absolute;
-  inset:-50%;
-  background-image:
-    linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
-  background-size:48px 48px;
-  transform:rotate(-12deg);
-  animation:gridMove 35s linear infinite;
-}
-
-@keyframes gridMove {
-  from {transform:translateY(0) rotate(-12deg);}
-  to {transform:translateY(48px) rotate(-12deg);}
-}
-
-.math-symbol {
-  position:absolute;
-  color:rgba(255,255,255,.12);
-  font-weight:bold;
-  user-select:none;
-  animation:floatSymbol 12s ease-in-out infinite;
-}
-
-@keyframes floatSymbol {
-  0%,100% {transform:translateY(0) rotate(0deg);}
-  50% {transform:translateY(-35px) rotate(12deg);}
-}
-
-.symbol1 {top:12%;left:5%;font-size:65px;}
-.symbol2 {top:28%;right:7%;font-size:80px;animation-delay:2s;}
-.symbol3 {bottom:13%;left:10%;font-size:75px;animation-delay:4s;}
-.symbol4 {bottom:20%;right:15%;font-size:60px;animation-delay:1s;}
-.symbol5 {top:55%;left:48%;font-size:55px;animation-delay:3s;}
-
-.glow {
-  position:absolute;
-  width:280px;
-  height:280px;
-  border-radius:50%;
-  background:rgba(255,193,77,.09);
-  filter:blur(60px);
-  animation:glowMove 12s ease-in-out infinite alternate;
-}
-
-.glow.one {top:-100px;left:-70px;}
-.glow.two {bottom:-100px;right:-70px;background:rgba(35,205,173,.11);}
-
-@keyframes glowMove {
-  to {transform:translate(100px,70px) scale(1.3);}
-}
-
-/* APP */
-
-#app {
-  position:relative;
-  z-index:2;
-  min-height:100vh;
-}
-
-/* QUANTUM TERMINAL & MATRIX CIPHER WELCOME GATE */
-
-#welcomeOverlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: #030814;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  overflow: hidden;
-  animation: fadeInPortal 0.5s ease forwards;
-}
-
-@keyframes fadeInPortal {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* MATRIX RAIN CANVAS BACKGROUND */
-#matrixCanvas {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  opacity: 0.25;
-  pointer-events: none;
-}
-
-.terminal-box {
-  position: relative;
-  z-index: 3;
-  max-width: 760px;
-  width: 100%;
-  background: rgba(7, 21, 47, 0.9);
-  border: 1px solid rgba(49, 196, 141, 0.4);
-  border-radius: 20px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(49, 196, 141, 0.15);
-  backdrop-filter: blur(15px);
-  overflow: hidden;
-  animation: slideUpTerminal 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes slideUpTerminal {
-  from { transform: translateY(40px) scale(0.95); opacity: 0; }
-  to { transform: translateY(0) scale(1); opacity: 1; }
-}
-
-.terminal-header {
-  background: #10264b;
-  padding: 12px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.terminal-dots {
-  display: flex;
-  gap: 8px;
-}
-
-.terminal-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
-.dot-red { background: #ff5f56; }
-.dot-yellow { background: #ffbd2e; }
-.dot-green { background: #27c93f; }
-
-.terminal-title-text {
-  font-family: monospace;
-  font-size: 12px;
-  color: #8da4c4;
-  letter-spacing: 1px;
-}
-
-.terminal-body {
-  padding: 35px 30px;
-  text-align: center;
-}
-
-.terminal-badge {
-  display: inline-block;
-  font-family: monospace;
-  font-size: 11px;
-  color: #31c48d;
-  background: rgba(49, 196, 141, 0.1);
-  border: 1px solid rgba(49, 196, 141, 0.3);
-  padding: 5px 14px;
-  border-radius: 15px;
-  margin-bottom: 15px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.terminal-body h1 {
-  font-size: clamp(24px, 4vw, 38px);
-  font-weight: 900;
-  color: #fff;
-  margin-bottom: 12px;
-  letter-spacing: 1px;
-}
-
-.terminal-body h1 span {
-  color: #f7c85b;
-}
-
-/* DYNAMIC MATH CHALLENGE STYLING */
-.math-challenge-box {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px dashed rgba(247, 200, 91, 0.4);
-  padding: 20px;
-  border-radius: 14px;
-  margin: 20px 0;
-}
-
-.math-challenge-box p {
-  font-size: 15px;
-  color: #ffd477;
-  margin-bottom: 15px;
-  font-weight: bold;
-}
-
-.math-options {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.math-option-btn {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  padding: 10px 22px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 15px;
-}
-
-.math-option-btn:hover {
-  background: #31c48d;
-  color: #07152f;
-  border-color: #31c48d;
-  transform: translateY(-2px);
-}
-
-.access-msg {
-  display: none;
-  color: #31c48d;
-  font-family: monospace;
-  font-weight: bold;
-  margin-top: 15px;
-  animation: blinkText 0.8s infinite alternate;
-}
-
-@keyframes blinkText {
-  from { opacity: 0.4; }
-  to { opacity: 1; }
-}
-
-.launch-btn {
-  display: none;
-  margin: 20px auto 0;
-  background: linear-gradient(135deg, #ffd16d, #f59e0b);
-  color: #07152f;
-  font-size: 14px;
-  font-weight: 900;
-  padding: 14px 35px;
-  border-radius: 30px;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
-  transition: all 0.3s;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.launch-btn:hover {
-  transform: scale(1.04);
-  box-shadow: 0 12px 35px rgba(245, 158, 11, 0.6);
-}
-
-/* HOME PAGE */
-
-#home {
-  min-height:100vh;
-  height:100vh;
-  padding:8px 3.2% 12px;
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-}
-
-/* SCHOOL HEADER: SIDE-BY-SIDE FLEX CONTAINER */
-
-.school-header {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  width:100%;
-  min-height:95px;
-  margin-bottom:3px;
-  gap: 15px;
-}
-
-.logo-container-left {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  flex-shrink:0;
-}
-
-.school-logo-left {
-  width:65px;
-  height:65px;
-  object-fit:contain;
-  filter:drop-shadow(0 0 12px rgba(255,205,90,.35));
-}
-
-.logo-text-white {
-  color: #ffffff;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 11px;
-  font-weight: bold;
-  letter-spacing: 0.5px;
-  margin-top: 4px;
-  text-align: center;
-  white-space: nowrap;
-}
-
-.school-name-wrap {
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex:1;
-}
-
-.school-name {
-  display:block;
-  width:100%;
-  max-width: 600px;
-  max-height:80px;
-  object-fit:contain;
-  filter:brightness(0) invert(1);
-}
-
-.school-fallback {
-  display:none;
-  width:100%;
-  color:white;
-  text-align:center;
-  font-weight:900;
-  font-size:clamp(16px,2.2vw,28px);
-  letter-spacing:1px;
-}
-
-.school-logo-right {
-  width:72px;
-  height:72px;
-  object-fit:contain;
-  flex-shrink:0;
-  filter:drop-shadow(0 0 12px rgba(255,205,90,.35));
-}
-
-.school-subtitle {
-  text-align:center;
-  color:#ffd77c;
-  font-size:11px;
-  letter-spacing:3px;
-  font-weight:bold;
-  margin-top:-2px;
-}
-
-.jubilee {
-  color:#fff;
-  font-size:10px;
-  text-align:center;
-  letter-spacing:2px;
-  margin-top:4px;
-  opacity:.85;
-}
-
-/* MAIN HEADING */
-
-.main-heading {
-  text-align:center;
-  margin:12px 0 13px;
-}
-
-.main-heading .eyebrow {
-  color:#ffd477;
-  font-size:11px;
-  font-weight:bold;
-  letter-spacing:4px;
-  text-transform:uppercase;
-  margin-bottom:5px;
-}
-
-.main-heading h1 {
-  font-size:clamp(23px,3vw,37px);
-  font-weight:900;
-  letter-spacing:1.5px;
-  line-height:1.15;
-  background:linear-gradient(90deg,#fff,#ffcf66,#fff);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-}
-
-.main-heading p {
-  color:#d8e6ff;
-  font-size:12px;
-  margin-top:6px;
-}
-
-/* TOPIC GRID */
-
-.topic-grid {
-  flex:1;
-  min-height:0;
-  display:grid;
-  grid-template-columns:repeat(5,minmax(0,1fr));
-  grid-template-rows:repeat(2,minmax(0,1fr));
-  gap:12px;
-  padding:3px 0 9px;
-}
-
-.topic-card {
-  min-width:0;
-  min-height:0;
-  position:relative;
-  border:1px solid rgba(255,255,255,.22);
-  border-radius:15px;
-  overflow:hidden;
-  background:rgba(255,255,255,.09);
-  cursor:pointer;
-  box-shadow:0 8px 25px rgba(0,0,0,.22);
-  transition:transform .3s,border-color .3s,box-shadow .3s;
-  animation:cardEnter .7s both;
-}
-
-.topic-card:nth-child(2) {animation-delay:.05s;}
-.topic-card:nth-child(3) {animation-delay:.1s;}
-.topic-card:nth-child(4) {animation-delay:.15s;}
-.topic-card:nth-child(5) {animation-delay:.2s;}
-.topic-card:nth-child(6) {animation-delay:.25s;}
-.topic-card:nth-child(7) {animation-delay:.3s;}
-.topic-card:nth-child(8) {animation-delay:.35s;}
-.topic-card:nth-child(9) {animation-delay:.4s;}
-.topic-card:nth-child(10) {animation-delay:.45s;}
-
-@keyframes cardEnter {
-  from {opacity:0;transform:translateY(20px);}
-  to {opacity:1;transform:translateY(0);}
-}
-
-.topic-card:hover {
-  transform:translateY(-5px) scale(1.015);
-  border-color:#ffd36c;
-  box-shadow:0 12px 35px rgba(255,190,70,.22);
-}
-
-/* COMPLETE TOPIC IMAGE: NO CROPPING */
-
-.topic-card img {
-  width:100%;
-  height:100%;
-  position:absolute;
-  inset:0;
-  object-fit:contain;
-  object-position:center;
-  background:#07152f;
-  transition:transform .6s;
-}
-
-.topic-card:hover img {
-  transform:scale(1.025);
-}
-
-.topic-card::after {
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:linear-gradient(
-    180deg,
-    rgba(3,13,32,.02) 5%,
-    rgba(3,13,32,.08) 45%,
-    rgba(3,13,32,.92) 100%
-  );
-}
-
-.topic-number {
-  position:absolute;
-  z-index:2;
-  top:9px;
-  left:10px;
-  background:rgba(255,199,83,.95);
-  color:#102344;
-  font-size:11px;
-  font-weight:900;
-  padding:5px 9px;
-  border-radius:20px;
-}
-
-.topic-info {
-  position:absolute;
-  z-index:2;
-  left:11px;
-  right:10px;
-  bottom:11px;
-}
-
-.topic-info h2 {
-  font-size:clamp(11px,1.1vw,15px);
-  line-height:1.25;
-  font-weight:900;
-  color:#fff;
-  margin-bottom:5px;
-  text-shadow:0 2px 8px #000;
-}
-
-.topic-info p {
-  font-size:10px;
-  line-height:1.35;
-  color:#e5edff;
-}
-
-.topic-open {
-  display:inline-block;
-  margin-top:7px;
-  padding:5px 10px;
-  border-radius:20px;
-  color:#132748;
-  background:#ffd16d;
-  font-size:9px;
-  font-weight:900;
-  letter-spacing:.5px;
-}
-
-/* HOME FOOTER */
-
-.home-footer {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  color:#cbd9f3;
-  font-size:10px;
-  padding:4px 2px 0;
-}
-
-.home-footer strong {
-  color:#ffd16d;
-}
-
-/* DETAIL PAGE */
-
-#detail {
-  display:none;
-  position:relative;
-  min-height:100vh;
-  padding:18px 5% 45px;
-  animation:pageIn .45s ease;
-}
-
-@keyframes pageIn {
-  from {opacity:0;transform:translateY(12px);}
-  to {opacity:1;transform:translateY(0);}
-}
-
-.detail-topbar {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  margin-bottom:20px;
-}
-
-.back-button {
-  border:1px solid rgba(255,255,255,.35);
-  background:rgba(255,255,255,.12);
-  color:white;
-  padding:10px 17px;
-  border-radius:30px;
-  cursor:pointer;
-  font-weight:bold;
-  font-size:13px;
-  transition:.25s;
-}
-
-.back-button:hover {
-  background:#ffd16d;
-  color:#102344;
-  border-color:#ffd16d;
-}
-
-.detail-school {
-  font-size:10px;
-  color:#ffd477;
-  letter-spacing:2px;
-  text-align:right;
-  font-weight:bold;
-}
-
-/* DETAIL HERO IMAGE: SHOW COMPLETE ORIGINAL IMAGE */
-
-.detail-hero {
-  display:grid;
-  grid-template-columns:1.05fr 1fr;
-  gap:28px;
-  align-items:center;
-  margin:10px 0 27px;
-}
-
-.detail-image-wrap {
-  position:relative;
-  min-height:360px;
-  border-radius:20px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.25);
-  background:#07152f;
-  box-shadow:0 15px 40px rgba(0,0,0,.3);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.detail-image-wrap img {
-  width:100%;
-  height:360px;
-  object-fit:contain;
-  object-position:center;
-  display:block;
-}
-
-.detail-title .topic-label {
-  color:#ffd16d;
-  font-size:12px;
-  letter-spacing:3px;
-  font-weight:bold;
-  margin-bottom:10px;
-}
-
-.detail-title h1 {
-  color:white;
-  font-size:clamp(27px,4vw,46px);
-  line-height:1.1;
-  margin-bottom:14px;
-  font-weight:900;
-}
-
-.detail-title .intro {
-  color:#dce8ff;
-  font-size:15px;
-  line-height:1.8;
-}
-
-.detail-title .gold-line {
-  width:90px;
-  height:4px;
-  border-radius:5px;
-  margin-top:19px;
-  background:linear-gradient(90deg,#ff963d,#ffdf83);
-}
-
-/* INFORMATION SECTIONS */
-
-.content-heading {
-  color:#ffd16d;
-  font-size:20px;
-  font-weight:900;
-  margin:27px 0 14px;
-}
-
-.content-grid {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:15px;
-}
-
-.content-box {
-  padding:20px;
-  background:rgba(255,255,255,.085);
-  border:1px solid rgba(255,255,255,.16);
-  border-radius:15px;
-  box-shadow:0 8px 25px rgba(0,0,0,.13);
-  transition:.25s;
-}
-
-.content-box:hover {
-  border-color:rgba(255,205,100,.6);
-  background:rgba(255,255,255,.12);
-}
-
-.content-box h3 {
-  color:#ffcf6b;
-  font-size:16px;
-  margin-bottom:10px;
-}
-
-.content-box p {
-  color:#e0eaff;
-  font-size:14px;
-  line-height:1.8;
-}
-
-.fact-grid {
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:13px;
-  margin-top:17px;
-}
-
-.fact {
-  text-align:center;
-  padding:18px 12px;
-  border-radius:13px;
-  background:linear-gradient(145deg,rgba(255,196,79,.16),rgba(255,255,255,.06));
-  border:1px solid rgba(255,211,109,.25);
-}
-
-.fact strong {
-  display:block;
-  font-size:22px;
-  color:#ffd16d;
-  margin-bottom:7px;
-}
-
-.fact span {
-  font-size:12px;
-  color:#e1eaff;
-  line-height:1.5;
-}
-
-/* GIF SECTION */
-
-.gif-section {
-  margin-top:25px;
-  padding:20px;
-  border:1px solid rgba(255,255,255,.18);
-  border-radius:17px;
-  background:rgba(255,255,255,.07);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  gap:12px;
-  text-align:center;
-}
-
-.gif-section h3 {
-  color:#ffd16d;
-  font-size:18px;
-}
-
-.gif-section p {
-  color:#dce8ff;
-  font-size:13px;
-  line-height:1.6;
-}
-
-.gif-section img {
-  max-width:min(100%,500px);
-  max-height:300px;
-  object-fit:contain;
-  border-radius:10px;
-  background:white;
-}
-
-.detail-footer {
-  text-align:center;
-  color:#b8c9e8;
-  font-size:11px;
-  margin-top:35px;
-  padding:18px 0;
-  border-top:1px solid rgba(255,255,255,.15);
-}
-
-/* TABLET & MOBILE */
-
-@media(max-width:1100px) {
-  #home {
-    height:auto;
-    min-height:100vh;
-    overflow:visible;
-  }
-
-  .topic-grid {
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    grid-template-rows:auto;
-  }
-
-  .topic-card {
-    height:190px;
-  }
-}
-
-@media(max-width:600px) {
-  #home {
-    padding:10px 12px 18px;
-  }
-
-  .school-header {
-    gap: 8px;
-  }
-
-  .school-logo-left {
-    width: 48px;
-    height: 48px;
-  }
-
-  .school-logo-right {
-    width: 48px;
-    height: 48px;
-  }
-
-  .logo-text-white {
-    font-size: 8px;
-  }
-
-  .school-name {
-    max-height: 40px;
-  }
-
-  .topic-grid {
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:10px;
-  }
-
-  .topic-card {
-    height:175px;
-  }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Mathematics Day Expo | Montessori Indus Residential School</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: { 900: '#0a192f', 800: '#112240', 950: '#020c1b' },
+                        gold: { 500: '#f59e0b', 400: '#fbbf24', 600: '#d97706' }
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        poppins: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #0a192f; color: #f8fafc; overflow-x: hidden; }
+        .gold-gradient-text { background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #d97706 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-6px); box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.3); border-color: #f59e0b; }
+        .matrix-bg { background: radial-gradient(circle at center, #112240 0%, #0a192f 100%); }
+    </style>
 </head>
-
-<body>
-
-<div class="background">
-  <div class="glow one"></div>
-  <div class="glow two"></div>
-  <span class="math-symbol symbol1">π</span>
-  <span class="math-symbol symbol2">∑</span>
-  <span class="symbol3">√</span>
-  <span class="math-symbol symbol4">∞</span>
-  <span class="math-symbol symbol5">∫</span>
-</div>
-
-<!-- QUANTUM TERMINAL & MATRIX RAIN WELCOME GATE -->
-<div id="welcomeOverlay">
-  <canvas id="matrixCanvas"></canvas>
-
-  <div class="terminal-box">
-    <div class="terminal-header">
-      <div class="terminal-dots">
-        <span class="terminal-dot dot-red"></span>
-        <span class="terminal-dot dot-yellow"></span>
-        <span class="terminal-dot dot-green"></span>
-      </div>
-      <div class="terminal-title-text">mirs_quantum_terminal_v2.4</div>
-      <div style="width: 40px;"></div>
-    </div>
-
-    <div class="terminal-body">
-      <div class="terminal-badge">Secure Judge Authorization Protocol</div>
-      <h1>National Mathematics Day <span>Expo 2026</span></h1>
-      
-      <!-- DYNAMIC MATH CHALLENGE -->
-      <div class="math-challenge-box" id="mathChallengeBox">
-        <p id="mathQuestionText">Loading math puzzle...</p>
-        <div class="math-options" id="mathOptionsContainer"></div>
-      </div>
-
-      <div class="access-msg" id="accessMsg">
-        ACCESS GRANTED: QUANTUM MATRIX UNLOCKED SUCCESSFULLY ✓
-      </div>
-
-      <button class="launch-btn" id="launchBtn" onclick="enterExpo()">
-        Enter Interactive Exhibit →
-      </button>
-    </div>
-  </div>
-</div>
-
-<div id="app">
-
-<!-- HOME PAGE -->
-
-<section id="home">
-
-  <!-- HEADER: SIDE-BY-SIDE FLEXBOX LAYOUT -->
-  <header class="school-header">
-
-    <!-- LEFT LOGO WITH WHITE TEXT -->
-    <div class="logo-container-left">
-      <img
-        class="school-logo-left"
-        src="montessori-logo1.png"
-        alt="Montessori Logo Left"
-      >
-      <span class="logo-text-white">FIRST AMONG EQUALS</span>
-    </div>
-
-    <!-- CENTER SCHOOL NAME -->
-    <div class="school-name-wrap">
-      <img
-        class="school-name"
-        src="https://aravalli-mirs.surge.sh/SCHOOL_NAME-removebg-preview.png"
-        alt="MONTESSORI INDUS RESIDENTIAL SCHOOL"
-        onerror="this.style.display='none';document.getElementById('schoolFallback').style.display='block';"
-      >
-
-      <div id="schoolFallback" class="school-fallback">
-        MONTESSORI INDUS RESIDENTIAL SCHOOL
-      </div>
-    </div>
-
-    <!-- RIGHT LOGO -->
-    <img
-      class="school-logo-right"
-      src="montessori-logo.png"
-      alt="Golden Jubilee School Logo Right"
-    >
-
-  </header>
-
-  <div class="school-subtitle">
-    LEARN • EXPLORE • DISCOVER • ACHIEVE
-  </div>
-
-  <div class="jubilee">
-    CELEBRATING KNOWLEDGE AND MATHEMATICAL EXCELLENCE
-  </div>
-
-  <main class="main-heading">
-    <div class="eyebrow">22 DECEMBER • NATIONAL MATHEMATICS DAY</div>
-    <h1>THE WORLD OF MATHEMATICS</h1>
-    <p>Discover the beauty, history, discoveries and limitless possibilities of mathematics.</p>
-  </main>
-
-  <div class="topic-grid" id="topicGrid"></div>
-
-  <footer class="home-footer">
-    <span><strong>22 December</strong> | National Mathematics Day</span>
-    <span>MONTESSORI INDUS RESIDENTIAL SCHOOL</span>
-    <span>Mathematics is everywhere!</span>
-  </footer>
-
-</section>
-
-<!-- DETAIL PAGE -->
-
-<section id="detail">
-
-  <div class="detail-topbar">
-    <button class="back-button" onclick="goHome()">
-      ← Back to Home
-    </button>
-
-    <div class="detail-school">
-      MONTESSORI INDUS RESIDENTIAL SCHOOL
-    </div>
-  </div>
-
-  <div id="detailContent"></div>
-
-</section>
-
-</div>
-
-<script>
-
-/* MATRIX RAIN EFFECT */
-const canvas = document.getElementById('matrixCanvas');
-const ctx = canvas.getContext('2d');
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-const mathChars = '0123456789π∑√∞∫+-×÷≠≈()[]';
-const fontSize = 14;
-let columns = canvas.width / fontSize;
-const drops = [];
-for (let i = 0; i < columns; i++) {
-  drops[i] = 1;
-}
-
-function drawMatrix() {
-  ctx.fillStyle = 'rgba(3, 8, 20, 0.08)';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  ctx.fillStyle = '#31c48d';
-  ctx.font = fontSize + 'px monospace';
-
-  for (let i = 0; i < drops.length; i++) {
-    const text = mathChars.charAt(Math.floor(Math.random() * mathChars.length));
-    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-      drops[i] = 0;
-    }
-    drops[i]++;
-  }
-}
-setInterval(drawMatrix, 50);
-
-/* GENERATE RANDOM EASY/MEDIUM MATH QUESTION ON EVERY VISIT */
-let currentCorrectAnswer = 0;
-
-function generateMathPuzzle() {
-  const types = ['add', 'sub', 'mul', 'square'];
-  const chosenType = types[Math.floor(Math.random() * types.length)];
-  let questionStr = "";
-
-  if (chosenType === 'add') {
-    const a = Math.floor(Math.random() * 50) + 10;
-    const b = Math.floor(Math.random() * 50) + 10;
-    currentCorrectAnswer = a + b;
-    questionStr = `What is ${a} + ${b}?`;
-  } else if (chosenType === 'sub') {
-    const a = Math.floor(Math.random() * 60) + 30;
-    const b = Math.floor(Math.random() * 25) + 5;
-    currentCorrectAnswer = a - b;
-    questionStr = `What is ${a} - ${b}?`;
-  } else if (chosenType === 'mul') {
-    const a = Math.floor(Math.random() * 10) + 2;
-    const b = Math.floor(Math.random() * 10) + 2;
-    currentCorrectAnswer = a * b;
-    questionStr = `What is ${a} × ${b}?`;
-  } else if (chosenType === 'square') {
-    const a = Math.floor(Math.random() * 10) + 3;
-    currentCorrectAnswer = a * a;
-    questionStr = `What is the square of ${a} (${a}²)?`;
-  }
-
-  document.getElementById("mathQuestionText").innerText = `🔐 Judge Security Check: ${questionStr}`;
-
-  let options = [currentCorrectAnswer];
-  while (options.length < 3) {
-    let offset = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
-    let wrongAns = currentCorrectAnswer + offset;
-    if (wrongAns >= 0 && !options.includes(wrongAns)) {
-      options.push(wrongAns);
-    }
-  }
-
-  options.sort(() => Math.random() - 0.5);
-
-  const container = document.getElementById("mathOptionsContainer");
-  container.innerHTML = "";
-  options.forEach(opt => {
-    const btn = document.createElement("button");
-    btn.className = "math-option-btn";
-    btn.innerText = opt;
-    btn.onclick = () => checkMathAnswer(opt);
-    container.appendChild(btn);
-  });
-}
-
-function checkMathAnswer(selectedVal) {
-  const challengeBox = document.getElementById("mathChallengeBox");
-  const accessMsg = document.getElementById("accessMsg");
-  const launchBtn = document.getElementById("launchBtn");
-
-  if (selectedVal === currentCorrectAnswer) {
-    challengeBox.style.display = "none";
-    accessMsg.style.display = "block";
-    launchBtn.style.display = "inline-block";
-  } else {
-    alert("Incorrect answer! Try another option or refresh for a new question.");
-    generateMathPuzzle();
-  }
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-  generateMathPuzzle();
-});
-
-function enterExpo() {
-  const overlay = document.getElementById("welcomeOverlay");
-  overlay.style.transition = "opacity 0.6s ease, transform 0.6s ease";
-  overlay.style.opacity = "0";
-  overlay.style.transform = "scale(1.08)";
-  setTimeout(() => {
-    overlay.style.display = "none";
-  }, 600);
-}
-
-/* ALL TEN MATHEMATICS TOPICS */
-
-const topics = [
-
-{
-title:"Great Indian Mathematicians",
-short:"Meet the brilliant minds who shaped mathematics in India.",
-image:"https://images.unsplash.com/photo-1635070041078-e363dbe005cb",
-intro:"India has a remarkable mathematical heritage. Over thousands of years, Indian mathematicians developed important ideas that influenced mathematics across the world. Their discoveries contributed to arithmetic, algebra, geometry, astronomy and number theory.",
-sections:[
-["Ancient Mathematical Heritage","Indian mathematics developed through centuries of observation, calculation and logical thinking. Ancient scholars created methods for working with large numbers, fractions, equations and geometric measurements. Their ideas became an important part of the development of mathematics worldwide."],
-["Aryabhata","Aryabhata was one of India's most influential ancient mathematicians and astronomers. His work Aryabhatiya discussed arithmetic, algebra, trigonometry and astronomy. He gave an approximation of pi and made important contributions to mathematical calculations."],
-["Brahmagupta","Brahmagupta made major contributions to arithmetic and algebra. His work explained rules involving zero and negative numbers. He also developed mathematical methods for solving certain quadratic equations."],
-["Bhaskara II","Bhaskara II was a celebrated mathematician whose work included arithmetic, algebra, geometry and astronomical calculations. His famous book Lilavati contains interesting mathematical problems and explanations."],
-["Mathematics Across Generations","Indian mathematicians helped develop mathematical knowledge through original thinking, careful observation and systematic methods. Their achievements continue to inspire students and researchers."],
-["Why Their Contributions Matter","The work of these scholars shows how mathematical ideas can travel across generations and cultures. Their achievements remind us that curiosity, reasoning and creativity are essential parts of scientific progress."]
-],
-facts:[
-["Aryabhata","Ancient Indian mathematician and astronomer"],
-["Brahmagupta","Important work on zero and negative numbers"],
-["Bhaskara II","Author of Lilavati"]
-]
-},
-
-{
-title:"Srinivasa Ramanujan",
-short:"Explore the extraordinary life and discoveries of a mathematical genius.",
-image:"https://images.unsplash.com/photo-1509228468518-180dd4864904",
-intro:"Srinivasa Ramanujan was one of India's greatest mathematical geniuses. Born on 22 December 1887 in Erode, Tamil Nadu, he developed remarkable mathematical ideas despite having limited formal training. His discoveries continue to influence modern mathematics.",
-sections:[
-["Early Life","Ramanujan showed exceptional mathematical ability from a young age. He became deeply interested in numbers, patterns and mathematical identities. He studied mathematical books independently and developed many original results."],
-["A Self-Taught Genius","Ramanujan explored mathematical problems with extraordinary creativity. He filled notebooks with formulas, series, equations and identities. Many of his results were far ahead of the mathematical knowledge available to him at that time."],
-["Collaboration with G. H. Hardy","In 1913, Ramanujan wrote to British mathematician G. H. Hardy, sharing some of his mathematical discoveries. Hardy recognised his extraordinary talent and helped him travel to Cambridge, where they worked together on important mathematical research."],
-["Major Contributions","Ramanujan made contributions to number theory, infinite series, continued fractions, partitions and mathematical analysis. His work on partition numbers and modular forms remains important in advanced mathematics."],
-["The Famous 1729","The number 1729 is popularly associated with Ramanujan. Hardy once mentioned that 1729 seemed like an uninteresting number. Ramanujan immediately recognised that it is the smallest number expressible as the sum of two positive cubes in two different ways."],
-["Legacy","Ramanujan returned to India in 1919 and passed away in 1920 at a young age. His mathematical notebooks continued to inspire researchers. India celebrates National Mathematics Day on 22 December in his honour."]
-],
-facts:[
-["22 December","His birthday"],
-["1729","The famous Hardy–Ramanujan number"],
-["1887–1920","His lifetime"]
-],
-gif:{
-title:"Patterns in Mathematics",
-text:"Mathematics is full of repeating patterns, infinite sequences and surprising relationships. Ramanujan explored many such ideas.",
-src:"https://commons.wikimedia.org/wiki/Special:FilePath/Pi-unrolled-720.gif"
-}
-},
-
-{
-title:"History of Indian Mathematics",
-short:"Travel through the development of mathematics in ancient and modern India.",
-image:"https://images.unsplash.com/photo-1505664194779-8beaceb93744",
-intro:"The history of Indian mathematics is a long journey of discovery. From early counting systems to advanced algebra and astronomy, Indian scholars developed methods that influenced mathematical learning around the world.",
-sections:[
-["Early Mathematical Knowledge","Ancient Indian mathematical knowledge was used in construction, trade, astronomy, calendars and measurement. Mathematical ideas were recorded and developed through different scholarly traditions."],
-["The Sulba Sutras","The Sulba Sutras contain early geometric knowledge connected with the construction of ritual structures. They include geometric rules and relationships involving squares, rectangles and diagonals."],
-["The Decimal Number System","The decimal place-value system became one of India's most influential mathematical contributions. It allows numbers to be represented efficiently using ten digits and the position of each digit."],
-["The Development of Zero","Indian mathematicians helped develop the use of zero as a number and as a placeholder in the decimal system. This made arithmetic and large-number calculations much more powerful."],
-["Classical Mathematicians","Aryabhata, Brahmagupta, Mahavira and Bhaskara II made significant contributions to arithmetic, algebra, geometry, trigonometry and mathematical astronomy."],
-["Mathematics in Modern India","Modern Indian mathematicians have contributed to statistics, number theory, computing, physics and many other areas. India's mathematical tradition continues through education and research."]
-],
-facts:[
-["Ancient India","A major centre of mathematical development"],
-["Place Value","A powerful way to write numbers"],
-["Many Centuries","A long tradition of discovery"]
-]
-},
-
-{
-title:"Zero and the Number System",
-short:"Understand zero, place value and the number system.",
-image:"https://images.unsplash.com/photo-1635070041078-e363dbe005cb",
-intro:"Zero is one of the most important ideas in mathematics. It helps represent the absence of a quantity, acts as a placeholder and makes the decimal number system possible. The number system allows us to represent and work with quantities in a systematic way.",
-sections:[
-["What Is Zero?","Zero represents no quantity. It is an integer that separates positive numbers from negative numbers on the number line. Zero is neither positive nor negative."],
-["Zero as a Placeholder","In the number 205, zero shows that there are no tens. Without the zero, the position and meaning of the other digits would change. Place value makes written arithmetic possible."],
-["The Decimal Number System","The decimal system uses ten digits: 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9. The value of a digit depends on its position, such as ones, tens, hundreds and thousands."],
-["Different Types of Numbers","Natural numbers are used for counting. Whole numbers include zero. Integers include positive and negative whole numbers. Rational numbers can be written as fractions, while irrational numbers cannot be expressed as a ratio of two integers."],
-["Zero in Arithmetic","Adding zero to a number does not change it. Multiplying a number by zero gives zero. Division by zero is undefined in ordinary arithmetic."],
-["Why Zero Changed Mathematics","Zero made large-number notation and calculation much easier. It became essential in arithmetic, algebra, science, engineering and digital technology."]
-],
-facts:[
-["0","The symbol for zero"],
-["10","Digits in the decimal system"],
-["Place Value","A foundation of modern arithmetic"]
-]
-},
-
-{
-title:"Famous Mathematical Discoveries",
-short:"Discover important ideas, formulas and breakthroughs in mathematics.",
-image:"https://images.unsplash.com/photo-1519682337058-a94d519337bc",
-intro:"Mathematics has developed through discoveries made by thinkers across the world. These discoveries help us understand numbers, shapes, patterns, motion and the structure of the universe.",
-sections:[
-["The Value of Pi","Pi, represented by the Greek letter π, is the ratio of a circle's circumference to its diameter. Its decimal expansion continues forever without repeating in a fixed pattern. It is approximately 3.14159."],
-["Pythagorean Theorem","The Pythagorean theorem describes a relationship between the sides of a right-angled triangle. It states that the square of the hypotenuse equals the sum of the squares of the other two sides."],
-["Algebra","Algebra uses symbols and letters to represent numbers and unknown quantities. It allows us to express general relationships and solve equations."],
-["Calculus","Calculus studies change and accumulation. Differentiation helps describe rates of change, while integration helps calculate accumulated quantities such as area."],
-["Prime Numbers","A prime number is a whole number greater than one that has exactly two positive factors: one and itself. Prime numbers are important in number theory and modern computing."],
-["Probability","Probability provides a mathematical way to describe uncertainty. It is used in science, games, weather forecasting, statistics and decision-making."]
-],
-facts:[
-["π ≈ 3.14159","The approximate value of pi"],
-["a² + b² = c²","Pythagorean theorem"],
-["Prime Numbers","Building blocks of whole numbers"]
-],
-gif:{
-title:"The Beautiful World of Pi",
-text:"The digits of pi continue endlessly. This animation illustrates the fascinating relationship between circles and the mathematical constant pi.",
-src:"https://commons.wikimedia.org/wiki/Special:FilePath/Pi-unrolled-720.gif"
-}
-},
-
-{
-title:"Geometry and Shapes",
-short:"Explore lines, angles, polygons, circles and three-dimensional shapes.",
-image:"https://images.unsplash.com/photo-1509228468518-180dd4864904",
-intro:"Geometry is the branch of mathematics that studies shapes, sizes, positions and properties of space. It helps us understand the world around us, from buildings and bridges to planets and patterns.",
-sections:[
-["Basic Geometric Elements","Points, lines, line segments, rays and planes are basic elements of geometry. They help us describe positions, directions and relationships between objects."],
-["Angles","An angle is formed when two rays meet at a common endpoint. Angles are measured in degrees. Common types include acute, right, obtuse, straight and reflex angles."],
-["Triangles","A triangle is a polygon with three sides and three angles. Triangles can be classified by their sides or angles. Their interior angles always add up to 180 degrees."],
-["Quadrilaterals and Polygons","A quadrilateral has four sides. Squares, rectangles, parallelograms, rhombuses and trapeziums are examples. A polygon is a closed plane figure made of straight line segments."],
-["Circles","A circle is a set of points in a plane that are all the same distance from a fixed point called the centre. The radius, diameter, circumference and area are important circle measurements."],
-["Three-Dimensional Shapes","Cubes, cuboids, cylinders, cones, spheres and pyramids are solid shapes. They have properties such as faces, edges, vertices, curved surfaces and volume."]
-],
-facts:[
-["180°","Sum of angles in a triangle"],
-["360°","A complete turn"],
-["πr²","Area of a circle"]
-],
-gif:{
-title:"Geometry in Motion",
-text:"Watch how geometric relationships can be represented visually. The Pythagorean theorem connects the three sides of a right-angled triangle.",
-src:"https://commons.wikimedia.org/wiki/Special:FilePath/Pythag_anim.gif"
-}
-},
-
-{
-title:"Important Maths Formulas",
-short:"Learn essential formulas used in arithmetic, algebra and geometry.",
-image:"https://images.unsplash.com/photo-1511818966892-d7d671e672a2",
-intro:"Mathematical formulas express relationships between quantities. They help us solve problems accurately and efficiently. Formulas are useful in school subjects, science, engineering, construction and everyday calculations.",
-sections:[
-["Algebraic Identities","Some important identities are (a + b)² = a² + 2ab + b², (a − b)² = a² − 2ab + b² and a² − b² = (a − b)(a + b). These identities help simplify expressions and solve equations."],
-["Speed, Distance and Time","Speed = Distance ÷ Time. Distance = Speed × Time. Time = Distance ÷ Speed. These relationships are used to solve motion-related problems."],
-["Area of Common Shapes","Area of a rectangle = length × breadth. Area of a square = side × side. Area of a triangle = ½ × base × height. Area of a circle = πr²."],
-["Perimeter and Circumference","Perimeter is the total length around a two-dimensional shape. The perimeter of a rectangle is 2(length + breadth). The circumference of a circle is 2πr."],
-["Volume","Volume measures the space occupied by a three-dimensional object. Volume of a cuboid = length × breadth × height. Volume of a cube = side³. Volume of a cylinder = πr²h."],
-["Pythagorean Theorem","For a right-angled triangle, a² + b² = c², where c is the hypotenuse. This formula is useful for finding an unknown side when the other two sides are known."]
-],
-facts:[
-["A = l × b","Area of a rectangle"],
-["A = ½bh","Area of a triangle"],
-["V = lbh","Volume of a cuboid"]
-]
-},
-
-{
-title:"Mathematics in Everyday Life",
-short:"See how mathematics is used in shopping, travel, cooking and daily decisions.",
-image:"https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
-intro:"Mathematics is not limited to classrooms or textbooks. We use it every day when managing money, reading time, measuring ingredients, planning journeys, comparing prices and understanding information.",
-sections:[
-["Shopping and Money","Mathematics helps us calculate prices, discounts, bills, savings and change. Percentages are especially useful when comparing offers and understanding taxes."],
-["Time and Scheduling","Clocks and calendars are based on mathematical ideas. We use time calculations to plan school schedules, appointments, journeys and daily activities."],
-["Cooking and Measurement","Recipes require accurate measurements of mass, volume and temperature. Fractions and ratios help us increase or decrease ingredient quantities."],
-["Travel and Transport","Distance, speed, time, fuel use and route planning all involve mathematics. Maps and navigation systems use coordinates and calculations."],
-["Sports and Games","Scores, averages, distances, angles, statistics and probability appear in many sports and games. Mathematics helps players and coaches analyse performance."],
-["Buildings and Design","Architects and engineers use geometry, measurements, ratios and calculations to design safe buildings, roads, bridges and other structures."]
-],
-facts:[
-["Percentages","Useful for discounts and bills"],
-["Measurements","Essential in cooking and construction"],
-["Time & Distance","Used in travel and planning"]
-]
-},
-
-{
-title:"Maths Puzzles and Brain Challenges",
-short:"Explore patterns, logical reasoning and mathematical problem-solving.",
-image:"https://images.unsplash.com/photo-1451187580459-43490279c0fa",
-intro:"Mathematical puzzles make learning enjoyable. They encourage logical thinking, careful observation, creativity and problem-solving. A good puzzle challenges us to look for patterns and explain why an answer works.",
-sections:[
-["Number Patterns","Number patterns follow a rule. For example, 2, 4, 6, 8, 10 increases by two each time. Identifying the rule helps us predict the next number."],
-["Logical Reasoning","Logic involves using facts and clear steps to reach a conclusion. Mathematical reasoning helps us decide whether an argument or solution is correct."],
-["Magic Squares","A magic square is a square arrangement of numbers in which each row, column and main diagonal has the same total. It combines arithmetic with patterns."],
-["Sudoku","Sudoku is a number-placement puzzle. The aim is to fill a grid while following rules that prevent repeated digits in each row, column and smaller region."],
-["Problem-Solving Strategies","Useful strategies include identifying what is known, finding what is required, drawing a diagram, looking for patterns, trying simpler examples and checking the final answer."],
-["Learning Through Challenges","Puzzles teach patience and flexible thinking. When a solution does not work, trying a different approach can reveal new mathematical ideas."]
-],
-facts:[
-["Observe","Look carefully for patterns"],
-["Reason","Use logical steps"],
-["Check","Verify your solution"]
-]
-},
-
-{
-title:"Mathematics and Future Technology",
-short:"Discover how mathematics powers artificial intelligence, robotics and space science.",
-image:"https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-intro:"Mathematics is one of the foundations of modern technology. Computers, artificial intelligence, robotics, communication networks, space exploration and scientific research all depend on mathematical ideas.",
-sections:[
-["Artificial Intelligence","Artificial intelligence uses mathematics to identify patterns, process information and make predictions. Statistics, probability, linear algebra and calculus are important in many AI systems."],
-["Computers and Binary Numbers","Computers represent information using binary digits, 0 and 1. Mathematical logic and number systems help computers process data and perform calculations."],
-["Robotics","Robots use mathematics to understand position, movement, distance and direction. Geometry, algebra and trigonometry help calculate how robotic parts should move."],
-["Space Exploration","Space missions depend on mathematics for trajectories, fuel calculations, orbital motion, distance measurement and navigation. Mathematical models help scientists plan and analyse missions."],
-["Cybersecurity","Modern digital security uses mathematical ideas such as number theory, prime numbers and modular arithmetic. These ideas help protect information and digital communication."],
-["The Future of Mathematics","Mathematics will continue to support discoveries in medicine, climate science, engineering, computing and space research. Learning mathematics develops skills that are valuable in many future careers."]
-],
-facts:[
-["AI","Uses mathematical models"],
-["Robotics","Depends on geometry and motion"],
-["Space Science","Uses advanced calculations"]
-]
-}
-
-];
-
-/* CREATE THE TEN HOME CARDS */
-
-const topicGrid = document.getElementById("topicGrid");
-
-topics.forEach((topic,index)=>{
-
-  const card = document.createElement("article");
-
-  card.className = "topic-card";
-  card.setAttribute("role","button");
-  card.setAttribute("tabindex","0");
-  card.setAttribute("aria-label","Open "+topic.title);
-
-  card.innerHTML = `
-    <img
-      src="${topic.image}"
-      alt="${topic.title}"
-      loading="${index > 4 ? "lazy" : "eager"}"
-    >
-
-    <span class="topic-number">
-      ${String(index+1).padStart(2,"0")}
-    </span>
-
-    <div class="topic-info">
-      <h2>${topic.title}</h2>
-      <p>${topic.short}</p>
-      <span class="topic-open">EXPLORE TOPIC →</span>
-    </div>
-  `;
-
-  card.addEventListener("click",()=>{
-    openTopic(index);
-  });
-
-  card.addEventListener("keydown",(event)=>{
-    if(event.key==="Enter" || event.key===" "){
-      event.preventDefault();
-      openTopic(index);
-    }
-  });
-
-  topicGrid.appendChild(card);
-
-});
-
-/* GENERATE TOPIC INFORMATION PAGE */
-
-function renderTopic(index){
-
-  const topic = topics[index];
-
-  const sectionHTML = topic.sections.map((section,i)=>`
-    <article class="content-box">
-      <h3>${String(i+1).padStart(2,"0")} | ${section[0]}</h3>
-      <p>${section[1]}</p>
-    </article>
-  `).join("");
-
-  const factsHTML = topic.facts.map(fact=>`
-    <div class="fact">
-      <strong>${fact[0]}</strong>
-      <span>${fact[1]}</span>
-    </div>
-  `).join("");
-
-  let gifHTML = "";
-
-  if(topic.gif){
-
-    gifHTML = `
-      <section class="gif-section">
-        <h3>${topic.gif.title}</h3>
-        <p>${topic.gif.text}</p>
-        <img
-          src="${topic.gif.src}"
-          alt="${topic.gif.title}"
-          loading="lazy"
-        >
-      </section>
-    `;
-
-  }
-
-  document.getElementById("detailContent").innerHTML = `
-
-    <div class="detail-hero">
-
-      <div class="detail-image-wrap">
-        <img src="${topic.image}" alt="${topic.title}">
-      </div>
-
-      <div class="detail-title">
-
-        <div class="topic-label">
-          NATIONAL MATHEMATICS DAY • TOPIC ${String(index+1).padStart(2,"0")}
+<body class="matrix-bg min-h-screen flex flex-col justify-between">
+
+    <!-- A. Grand Welcome Experience Overlay -->
+    <div id="welcome-overlay" class="fixed inset-0 z-50 bg-navy-950 flex flex-col items-center justify-center p-6 text-center transition-opacity duration-700">
+        <div class="max-w-2xl bg-navy-900/90 border-2 border-gold-500/50 rounded-2xl p-8 shadow-2xl backdrop-blur-md">
+            <div class="flex justify-center items-center gap-4 mb-6">
+                <img src="images/logo-left-golden-jubilee.png" alt="Golden Jubilee" class="h-16 w-16 object-contain">
+                <div class="text-gold-500 font-cinzel text-xl font-bold">Montessori Indus Residential School</div>
+                <img src="images/logo-right-first-among-equals.png" alt="First Among Equals" class="h-16 w-16 object-contain">
+            </div>
+            <h1 class="text-3xl md:text-4xl font-cinzel font-bold gold-gradient-text mb-4">National Mathematics Day Expo</h1>
+            <p class="text-slate-300 mb-6 text-sm md:text-base">Celebrating India's glorious mathematical heritage, Srinivasa Ramanujan, and the timeless genius of Vedic Mathematics.</p>
+            <button onclick="enterExpo()" class="bg-gradient-to-r from-gold-500 to-gold-600 text-navy-950 font-bold px-8 py-3 rounded-full text-lg shadow-lg hover:scale-105 transition duration-300">
+                Enter Exhibition <i class="fas fa-arrow-right ml-2"></i>
+            </button>
         </div>
-
-        <h1>${topic.title}</h1>
-
-        <p class="intro">${topic.intro}</p>
-
-        <div class="gold-line"></div>
-
-      </div>
-
     </div>
 
-    <h2 class="content-heading">Explore the Topic</h2>
+    <!-- Header Section -->
+    <header class="bg-navy-900/90 border-b border-gold-500/30 sticky top-0 z-40 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
+            <!-- LEFT: Golden Jubilee Logo -->
+            <div class="flex items-center gap-3">
+                <img src="images/logo-left-golden-jubilee.png" alt="Montessori Golden Jubilee" class="h-14 w-14 object-contain">
+                <span class="text-xs font-semibold text-gold-400 hidden sm:block">50 Years of Excellence</span>
+            </div>
+            <!-- CENTRE: School Name Image -->
+            <div class="text-center">
+                <img src="https://aravalli-mirs.surge.sh/SCHOOL_NAME-removebg-preview.png" alt="Montessori Indus Residential School" class="h-10 md:h-12 object-contain mx-auto filter brightness-0 invert">
+                <p class="text-[10px] tracking-widest text-gold-400 font-cinzel mt-1 uppercase">National Mathematics Day Expo 2026</p>
+            </div>
+            <!-- RIGHT: First Among Equals Logo -->
+            <div class="flex items-center gap-3 justify-end">
+                <span class="text-xs font-semibold text-gold-400 hidden sm:block text-right">First Among Equals</span>
+                <img src="images/logo-right-first-among-equals.png" alt="First Among Equals" class="h-14 w-14 object-contain">
+            </div>
+        </div>
+    </header>
 
-    <div class="content-grid">
-      ${sectionHTML}
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
+        
+        <!-- Hero Intro Banner -->
+        <section class="text-center mb-12">
+            <h2 class="text-3xl md:text-5xl font-cinzel font-bold gold-gradient-text mb-4">The Mathematical Heritage of India</h2>
+            <p class="text-slate-300 max-w-2xl mx-auto text-sm md:text-base">Explore our 10 interactive exhibition zones, 3D lab, timeline, quiz arena, and live leaderboard celebrating the legacy of Srinivasa Ramanujan, Aryabhata, Brahmagupta, and Bhaskara II.</p>
+        </section>
+
+        <!-- 10 Main Topic Cards Grid -->
+        <section id="topics-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-16">
+            <!-- Topic 1 -->
+            <div onclick="openTopic(1)" class="bg-navy-800/80 border border-gold-500/20 rounded-xl p-5 card-hover cursor-pointer flex flex-col justify-between">
+                <div>
+                    <div class="h-32 mb-4 overflow-hidden rounded-lg bg-navy-950 flex items-center justify-center">
+                        <img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=600&q=80" alt="Great Indian Mathematicians" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-cinzel font-bold text-gold-400 text-base mb-2">1. Great Indian Mathematicians</h3>
+                    <p class="text-slate-400 text-xs line-clamp-2">Aryabhata, Brahmagupta, Bhaskara II, and Madhava of Sangamagrama.</p>
+                </div>
+                <span class="text-xs text-gold-500 font-semibold mt-4 flex items-center gap-1">Explore Zone <i class="fas fa-chevron-right text-[10px]"></i></span>
+            </div>
+
+            <!-- Topic 2 -->
+            <div onclick="openTopic(2)" class="bg-navy-800/80 border border-gold-500/20 rounded-xl p-5 card-hover cursor-pointer flex flex-col justify-between">
+                <div>
+                    <div class="h-32 mb-4 overflow-hidden rounded-lg bg-navy-950 flex items-center justify-center">
+                        <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=600&q=80" alt="Srinivasa Ramanujan" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-cinzel font-bold text-gold-400 text-base mb-2">2. Srinivasa Ramanujan</h3>
+                    <p class="text-slate-400 text-xs line-clamp-2">The man who knew infinity, mock theta functions, and 1729 number.</p>
+                </div>
+                <span class="text-xs text-gold-500 font-semibold mt-4 flex items-center gap-1">Explore Zone <i class="fas fa-chevron-right text-[10px]"></i></span>
+            </div>
+
+            <!-- Topic 3 -->
+            <div onclick="openTopic(3)" class="bg-navy-800/80 border border-gold-500/20 rounded-xl p-5 card-hover cursor-pointer flex flex-col justify-between">
+                <div>
+                    <div class="h-32 mb-4 overflow-hidden rounded-lg bg-navy-950 flex items-center justify-center">
+                        <img src="https://images.unsplash.com/photo-1461468611805-3f948f668463?auto=format&fit=crop&w=600&q=80" alt="History of Indian Mathematics" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-cinzel font-bold text-gold-400 text-base mb-2">3. History of Indian Mathematics</h3>
+                    <p class="text-slate-400 text-xs line-clamp-2">From Sulba Sutras and ancient Vedic geometry to medieval breakthroughs.</p>
+                </div>
+                <span class="text-xs text-gold-500 font-semibold mt-4 flex items-center gap-1">Explore Zone <i class="fas fa-chevron-right text-[10px]"></i></span>
+            </div>
+
+            <!-- Topic 4 -->
+            <div onclick="openTopic(4)" class="bg-navy-800/80 border border-gold-500/20 rounded-xl p-5 card-hover cursor-pointer flex flex-col justify-between">
+                <div>
+                    <div class="h-32 mb-4 overflow-hidden rounded-lg bg-navy-950 flex items-center justify-center">
+                        <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=600&q=80" alt="Zero and Number System" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-cinzel font-bold text-gold-400 text-base mb-2">4. Zero and Number System</h3>
+                    <p class="text-slate-400 text-xs line-clamp-2'>The invention of "Shunya" (Zero) and decimal place-value system.</p>
+                </div>
+                <span class="text-xs text-gold-500 font-semibold mt-4 flex items-center gap-1">Explore Zone <i class="fas fa-chevron-right text-[10px]"></i></span>
+            </div>
+
+            <!-- Topic 5 -->
+            <div onclick="openTopic(5)" class="bg-navy-800/80 border border-gold-500/20 rounded-xl p-5 card-hover cursor-pointer flex flex-col justify-between">
+                <div>
+                    <div class="h-32 mb-4 overflow-hidden rounded-lg bg-navy-950 flex items-center justify-center">
+                        <img src="https://images.unsplash.com/photo-1596495577886-d920f1fb7238?auto=format&fit=crop&w=600&q=80" alt="Famous Mathematical Discoveries" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-cinzel font-bold text-gold-400 text-base mb-2">5. Famous Discoveries</h3>
+                    <p class="text-slate-400 text-xs line-clamp-2">Sine tables, negative numbers, indeterminate equations, and calculus series.</p>
+                </div>
+                <span class="text-xs text-gold-500 font-semibold mt-4 flex items-center gap-1">Explore Zone <i class="fas fa-chevron-right text-[10px]"></i></span>
+            </div>
+
+            <!-- Topic 6 -->
+            <div onclick="openTopic(6)" class="bg-navy-800/80 border border-gold-500/20 rounded-xl p-5 card-hover cursor-pointer flex flex-col justify-between">
+                <div>
+                    <div class="h-32 mb-4 overflow-hidden rounded-lg bg-navy-950 flex items-center justify-center">
+                        <img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=600&q=80" alt="Geometry and Shapes" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-cinzel font-bold text-gold-400 text-base mb-2">6. Geometry and Shapes</h3>
+                    <p class="text-slate-400 text-xs line-clamp-2">Pythagorean theorem in Sulba Sutras and sacred temple architecture.</p>
+                </div>
+                <span class="text-xs text-gold-500 font-semibold mt-4 flex items-center gap-1">Explore Zone <i class="fas fa-chevron-right text-[10px]"></i></span>
+            </div>
+
+            <!-- Topic 7 -->
+            <div onclick="openTopic(7)" class="bg-navy-800/80 border border-gold-500/20 rounded-xl p-5 card-hover cursor-pointer flex flex-col justify-between">
+                <div>
+                    <div class="h-32 mb-4 overflow-hidden rounded-lg bg-navy-950 flex items-center justify-center">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="Important Maths Formulas" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-cinzel font-bold text-gold-400 text-base mb-2">7. Important Maths Formulas</h3>
+                    <p class="text-slate-400 text-xs line-clamp-2">Vedic math mental shortcuts, algebraic identities, and trigonometric expansions.</p>
+                </div>
+                <span class="text-xs text-gold-500 font-semibold mt-4 flex items-center gap-1">Explore Zone <i class="fas fa-chevron-right text-[10px]"></i></span>
+            </div>
+
+            <!-- Topic 8 -->
+            <div onclick="openTopic(8)" class="bg-navy-800/80 border border-gold-500/20 rounded-xl p-5 card-hover cursor-pointer flex flex-col justify-between">
+                <div>
+                    <div class="h-32 mb-4 overflow-hidden rounded-lg bg-navy-950 flex items-center justify-center">
+                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Mathematics in Everyday Life" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-cinzel font-bold text-gold-400 text-base mb-2">8. Mathematics in Everyday Life</h3>
+                    <p class="text-slate-400 text-xs line-clamp-2">Patterns in nature, music rhythms (Fibonacci & Tala), and architecture.</p>
+                </div>
+                <span class="text-xs text-gold-500 font-semibold mt-4 flex items-center gap-1">Explore Zone <i class="fas fa-chevron-right text-[10px]"></i></span>
+            </div>
+
+            <!-- Topic 9 -->
+            <div onclick="openTopic(9)" class="bg-navy-800/80 border border-gold-500/20 rounded-xl p-5 card-hover cursor-pointer flex flex-col justify-between">
+                <div>
+                    <div class="h-32 mb-4 overflow-hidden rounded-lg bg-navy-950 flex items-center justify-center">
+                        <img src="https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?auto=format&fit=crop&w=600&q=80" alt="Maths Puzzles and Brain Challenges" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-cinzel font-bold text-gold-400 text-base mb-2">9. Puzzles & Brain Challenges</h3>
+                    <p class="text-slate-400 text-xs line-clamp-2">Ancient Bhaskara II puzzles, magic squares, and logical paradoxes.</p>
+                </div>
+                <span class="text-xs text-gold-500 font-semibold mt-4 flex items-center gap-1">Explore Zone <i class="fas fa-chevron-right text-[10px]"></i></span>
+            </div>
+
+            <!-- Topic 10 -->
+            <div onclick="openTopic(10)" class="bg-navy-800/80 border border-gold-500/20 rounded-xl p-5 card-hover cursor-pointer flex flex-col justify-between">
+                <div>
+                    <div class="h-32 mb-4 overflow-hidden rounded-lg bg-navy-950 flex items-center justify-center">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="Mathematics and Future Technology" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-cinzel font-bold text-gold-400 text-base mb-2">10. Future Technology</h3>
+                    <p class="text-slate-400 text-xs line-clamp-2">AI algorithms, quantum computing, cybersecurity, and space exploration.</p>
+                </div>
+                <span class="text-xs text-gold-500 font-semibold mt-4 flex items-center gap-1">Explore Zone <i class="fas fa-chevron-right text-[10px]"></i></span>
+            </div>
+        </section>
+
+        <!-- 5 Additional Expo Features Section -->
+        <section class="mb-16">
+            <h2 class="text-2xl md:text-3xl font-cinzel font-bold text-center gold-gradient-text mb-8">Interactive Expo Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Feature B: 3D Math Lab -->
+                <div onclick="openFeature('lab')" class="bg-navy-800 border border-gold-500/30 rounded-xl p-6 text-center cursor-pointer card-hover">
+                    <div class="text-gold-500 text-3xl mb-3"><i class="fas fa-cube"></i></div>
+                    <h3 class="font-cinzel font-bold text-lg mb-2">Interactive 3D Lab</h3>
+                    <p class="text-slate-300 text-xs">Explore interactive geometrical models and polyhedra.</p>
+                </div>
+                <!-- Feature C: Math Challenge Arena -->
+                <div onclick="openFeature('quiz')" class="bg-navy-800 border border-gold-500/30 rounded-xl p-6 text-center cursor-pointer card-hover">
+                    <div class="text-gold-500 text-3xl mb-3"><i class="fas fa-brain"></i></div>
+                    <h3 class="font-cinzel font-bold text-lg mb-2">Math Challenge Arena</h3>
+                    <p class="text-slate-300 text-xs">Test your math skills with our live quiz and earn scores.</p>
+                </div>
+                <!-- Feature D: Indian Mathematics Timeline -->
+                <div onclick="openFeature('timeline')" class="bg-navy-800 border border-gold-500/30 rounded-xl p-6 text-center cursor-pointer card-hover">
+                    <div class="text-gold-500 text-3xl mb-3"><i class="fas fa-history"></i></div>
+                    <h3 class="font-cinzel font-bold text-lg mb-2">Mathematical Timeline</h3>
+                    <p class="text-slate-300 text-xs">Journey through millennia of Indian mathematical discoveries.</p>
+                </div>
+                <!-- Feature E: Live Leaderboard -->
+                <div onclick="openFeature('leaderboard')" class="bg-navy-800 border border-gold-500/30 rounded-xl p-6 text-center cursor-pointer card-hover">
+                    <div class="text-gold-500 text-3xl mb-3"><i class="fas fa-trophy"></i></div>
+                    <h3 class="font-cinzel font-bold text-lg mb-2">Live Leaderboard</h3>
+                    <p class="text-slate-300 text-xs">View live rankings of students who completed the challenge.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Full-Screen Topic Detail Modal / Page -->
+    <div id="detail-modal" class="fixed inset-0 z-50 bg-navy-950/95 hidden overflow-y-auto p-4 md:p-8">
+        <div class="max-w-4xl mx-auto bg-navy-900 border border-gold-500/50 rounded-2xl p-6 md:p-10 relative">
+            <button onclick="closeDetail()" class="absolute top-4 right-4 bg-gold-500 text-navy-950 font-bold px-4 py-2 rounded-full hover:bg-gold-400 transition">
+                <i class="fas fa-arrow-left mr-2"></i> Back to Expo
+            </button>
+            <div id="modal-content" class="mt-8 text-slate-200">
+                <!-- Dynamic Content injected here -->
+            </div>
+        </div>
     </div>
 
-    <h2 class="content-heading">Important Facts</h2>
+    <!-- Footer -->
+    <footer class="bg-navy-950 border-t border-gold-500/30 py-6 text-center text-slate-400 text-xs">
+        <p class="font-cinzel text-gold-400 mb-1">Montessori Indus Residential School – National Mathematics Day Expo</p>
+        <p>&copy; 2026 All Rights Reserved. Celebrating the Spirit of Indian Mathematics.</p>
+    </footer>
 
-    <div class="fact-grid">
-      ${factsHTML}
-    </div>
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Welcome Overlay
+        function enterExpo() {
+            const overlay = document.getElementById('welcome-overlay');
+            overlay.classList.add('opacity-0');
+            setTimeout(() => { overlay.style.display = 'none'; }, 700);
+        }
 
-    ${gifHTML}
+        // Data for 10 Topics
+        const topicData = {
+            1: {
+                title: "Great Indian Mathematicians",
+                subtitle: "Pioneers who shaped the mathematical universe",
+                image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=1000&q=80",
+                content: `
+                    <h3 class="text-2xl font-cinzel font-bold text-gold-400 mb-4">Masters of Ancient & Classical India</h3>
+                    <p class="mb-4">India has a rich tradition of mathematical inquiry dating back over 3,000 years. Key figures include:</p>
+                    <ul class="list-disc pl-6 space-y-2 mb-6 text-slate-300">
+                        <li><strong>Aryabhata (476–550 CE):</strong> Calculated $\\pi$ to 4 decimal places ($3.1416$), explained lunar and solar eclipses, and introduced sine tables.</li>
+                        <li><strong>Brahmagupta (598–668 CE):</strong> Formulated rules for arithmetic operations with zero and negative numbers.</li>
+                        <li><strong>Bhaskara II (1114–1185 CE):</strong> Wrote <em>Siddhanta Shiromani</em>, covering calculus concepts and astronomical calculations.</li>
+                        <li><strong>Madhava of Sangamagrama (1340–1425 CE):</strong> Founded the Kerala School of Astronomy and Mathematics, discovering infinite series for trigonometric functions centuries before Europe.</li>
+                    </ul>
+                `
+            },
+            2: {
+                title: "Srinivasa Ramanujan",
+                subtitle: "The Man Who Knew Infinity",
+                image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1000&q=80",
+                content: `
+                    <h3 class="text-2xl font-cinzel font-bold text-gold-400 mb-4">The Mathematical Genius of Erode</h3>
+                    <p class="mb-4">Born on December 22, 1887, Srinivasa Ramanujan was a self-taught mathematical genius who made extraordinary contributions to analytical theory of numbers, infinite series, and continued fractions.</p>
+                    <div class="bg-navy-800 p-4 rounded-xl border border-gold-500/30 mb-4">
+                        <h4 class="font-bold text-gold-400 mb-2">The Hardy-Ramanujan Number (1729)</h4>
+                        <p class="text-sm">1729 is the smallest number expressible as the sum of two cubes in two different ways: $1729 = 1^3 + 12^3 = 9^3 + 10^3$.</p>
+                    </div>
+                `
+            },
+            3: {
+                title: "History of Indian Mathematics",
+                subtitle: "From Vedic Altars to Modern Research",
+                image: "https://images.unsplash.com/photo-1461468611805-3f948f668463?auto=format&fit=crop&w=1000&q=80",
+                content: `
+                    <h3 class="text-2xl font-cinzel font-bold text-gold-400 mb-4">Millennia of Mathematical Evolution</h3>
+                    <p class="mb-4">Indian mathematics evolved in distinct phases:</p>
+                    <ul class="list-disc pl-6 space-y-2 mb-6 text-slate-300">
+                        <li><strong>The Vedic Period (c. 1500–500 BCE):</strong> Sulba Sutras contained geometric rules for constructing fire altars and early statements of the Pythagorean theorem.</li>
+                        <li><strong>The Classical Era (5th–12th Century):</strong> Marked by works of Aryabhata, Varahamihira, Brahmagupta, and Bhaskara II.</li>
+                        <li><strong>The Kerala School (14th–16th Century):</strong> Advanced calculus, trigonometric expansions, and power series.</li>
+                    </ul>
+                `
+            },
+            4: {
+                title: "Zero and the Number System",
+                subtitle: "The Gift of Shunya to the World",
+                image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=1000&q=80",
+                content: `
+                    <h3 class="text-2xl font-cinzel font-bold text-gold-400 mb-4">The Birth of 'Shunya'</h3>
+                    <p class="mb-4">The concept of zero as both a placeholder and a number in its own right was formalized in India. The Bakhshali manuscript and inscriptions at Gwalior (9th century) display the earliest recorded use of zero as a written digit.</p>
+                    <p class="text-slate-300">Combined with the base-10 decimal place-value system, zero revolutionized global commerce, science, and computer science (binary systems).</p>
+                `
+            },
+            5: {
+                title: "Famous Mathematical Discoveries",
+                subtitle: "Breakthroughs that changed science",
+                image: "https://images.unsplash.com/photo-1596495577886-d920f1fb7238?auto=format&fit=crop&w=1000&q=80",
+                content: `
+                    <h3 class="text-2xl font-cinzel font-bold text-gold-400 mb-4">Key Indian Innovations</h3>
+                    <ul class="list-disc pl-6 space-y-2 text-slate-300">
+                        <li><strong>Sine and Cosine Tables:</strong> First developed by Aryabhata for accurate astronomical predictions.</li>
+                        <li><strong>Negative Numbers:</strong> Brahmagupta established rules for debts (negative numbers) and fortunes (positive numbers).</li>
+                        <li><strong>Chakravala Method:</strong> A cyclic algorithm to solve indeterminate quadratic equations developed by Bhaskara II.</li>
+                    </ul>
+                `
+            },
+            6: {
+                title: "Geometry and Shapes",
+                subtitle: "Sacred Geometry & Sulba Sutras",
+                image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=1000&q=80",
+                content: `
+                    <h3 class="text-2xl font-cinzel font-bold text-gold-400 mb-4">Geometric Precision in Architecture</h3>
+                    <p class="mb-4">Ancient Indian architects used precise geometrical principles for temple construction (Vastu Shastra and Mandalas).</p>
+                    <p class="text-slate-300">The Sulba Sutras provided detailed instructions on transforming shapes (e.g., turning a circle into a square of equal area).</p>
+                `
+            },
+            7: {
+                title: "Important Maths Formulas",
+                subtitle: "Vedic Mental Mathematics & Identities",
+                image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=80",
+                content: `
+                    <h3 class="text-2xl font-cinzel font-bold text-gold-400 mb-4">Vedic Math Sutras</h3>
+                    <p class="mb-4">Based on 16 Sutras (aphorisms) rediscovered by Swami Bharati Krishna Tirtha, Vedic mathematics allows lightning-fast mental calculations for multiplication, division, squares, and square roots.</p>
+                `
+            },
+            8: {
+                title: "Mathematics in Everyday Life",
+                subtitle: "Patterns, Art, Music, and Nature",
+                image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1000&q=80",
+                content: `
+                    <h3 class="text-2xl font-cinzel font-bold text-gold-400 mb-4">Mathematics All Around Us</h3>
+                    <p class="mb-4">From the rhythm cycles (Tala) in Carnatic music to the Fibonacci spirals in sunflower seeds and pinecones, mathematics governs the natural and artistic beauty of our universe.</p>
+                `
+            },
+            9: {
+                title: "Maths Puzzles & Brain Challenges",
+                subtitle: "Test your wits with ancient puzzles",
+                image: "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?auto=format&fit=crop&w=1000&q=80",
+                content: `
+                    <h3 class="text-2xl font-cinzel font-bold text-gold-400 mb-4">Bhaskara's Bee Puzzle</h3>
+                    <p class="mb-4"><em>"A fifth part of a swarm of bees settled on a Kadamba flower; a third on a Silindhri flower; three times the difference of those two numbers flew to the banyan tree..."</em></p>
+                    <p class="text-slate-300">Ancient Indian mathematicians loved framing math as poetic puzzles!</p>
+                `
+            },
+            10: {
+                title: "Mathematics and Future Technology",
+                subtitle: "AI, Quantum Computing, and Beyond",
+                image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=80",
+                content: `
+                    <h3 class="text-2xl font-cinzel font-bold text-gold-400 mb-4">The Digital Age</h3>
+                    <p class="mb-4">Modern artificial intelligence, cryptography, machine learning, and space missions depend entirely on advanced mathematical modeling, linear algebra, and algorithmic computation.</p>
+                `
+            }
+        };
 
-    <div class="detail-footer">
-      NATIONAL MATHEMATICS DAY • 22 DECEMBER<br>
-      MONTESSORI INDUS RESIDENTIAL SCHOOL<br>
-      <span style="color:#ffd16d">
-        Discover • Think • Calculate • Create
-      </span>
-    </div>
+        function openTopic(id) {
+            const data = topicData[id];
+            if (!data) return;
+            const modal = document.getElementById('detail-modal');
+            const content = document.getElementById('modal-content');
+            content.innerHTML = `
+                <div class="mb-6 rounded-xl overflow-hidden h-64 md:h-80 bg-navy-950">
+                    <img src="${data.image}" alt="${data.title}" class="w-full h-full object-cover">
+                </div>
+                <h2 class="text-3xl font-cinzel font-bold gold-gradient-text mb-2">${data.title}</h2>
+                <p class="text-gold-400 text-sm mb-6">${data.subtitle}</p>
+                <div class="prose prose-invert max-w-none text-slate-300">${data.content}</div>
+            `;
+            modal.classList.remove('hidden');
+        }
 
-  `;
+        function closeDetail() {
+            document.getElementById('detail-modal').classList.add('hidden');
+        }
 
-}
+        // Feature Handlers
+        function openFeature(type) {
+            const modal = document.getElementById('detail-modal');
+            const content = document.getElementById('modal-content');
+            let html = '';
 
-/* OPEN TOPIC */
+            if (type === 'lab') {
+                html = `
+                    <h2 class="text-3xl font-cinzel font-bold gold-gradient-text mb-4"><i class="fas fa-cube mr-2"></i> Interactive 3D Mathematics Lab</h2>
+                    <p class="text-slate-300 mb-6">Explore 3D geometrical models and polyhedra used in ancient Indian architecture and modern geometry.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-navy-800 p-5 rounded-xl border border-gold-500/30 text-center">
+                            <div class="text-gold-500 text-4xl mb-3"><i class="fas fa-shapes"></i></div>
+                            <h4 class="font-bold text-gold-400 mb-2">Platonic Solids</h4>
+                            <p class="text-xs text-slate-300">Tetrahedron, Cube, Octahedron, Dodecahedron, and Icosahedron.</p>
+                        </div>
+                        <div class="bg-navy-800 p-5 rounded-xl border border-gold-500/30 text-center">
+                            <div class="text-gold-500 text-4xl mb-3"><i class="fas fa-ring"></i></div>
+                            <h4 class="font-bold text-gold-400 mb-2">Torus & Spheres</h4>
+                            <p class="text-xs text-slate-300">Surface area and volume calculations in celestial mechanics.</p>
+                        </div>
+                        <div class="bg-navy-800 p-5 rounded-xl border border-gold-500/30 text-center">
+                            <div class="text-gold-500 text-4xl mb-3"><i class="fas fa-project-diagram"></i></div>
+                            <h4 class="font-bold text-gold-400 mb-2">Mandalas & Symmetry</h4>
+                            <p class="text-xs text-slate-300">Rotational symmetry, tessellations, and sacred geometry.</p>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'quiz') {
+                html = `
+                    <h2 class="text-3xl font-cinzel font-bold gold-gradient-text mb-4"><i class="fas fa-brain mr-2"></i> Math Challenge Arena</h2>
+                    <div id="quiz-container" class="bg-navy-800 p-6 rounded-xl border border-gold-500/30">
+                        <h4 id="question-title" class="font-bold text-gold-400 text-lg mb-4">Question 1: Who calculated $\\pi$ to 4 decimal places ($3.1416$) in ancient India?</h4>
+                        <div class="space-y-3" id="quiz-options">
+                            <button onclick="submitQuizAnswer(true)" class="w-full text-left p-3 rounded-lg bg-navy-900 border border-gold-500/20 hover:border-gold-500 transition">A) Aryabhata</button>
+                            <button onclick="submitQuizAnswer(false)" class="w-full text-left p-3 rounded-lg bg-navy-900 border border-gold-500/20 hover:border-gold-500 transition">B) Brahmagupta</button>
+                            <button onclick="submitQuizAnswer(false)" class="w-full text-left p-3 rounded-lg bg-navy-900 border border-gold-500/20 hover:border-gold-500 transition">C) Bhaskara II</button>
+                        </div>
+                        <div id="quiz-feedback" class="mt-4 font-bold text-sm"></div>
+                    </div>
+                `;
+            } else if (type === 'timeline') {
+                html = `
+                    <h2 class="text-3xl font-cinzel font-bold gold-gradient-text mb-6"><i class="fas fa-history mr-2"></i> Indian Mathematics Timeline</h2>
+                    <div class="space-y-6 border-l-2 border-gold-500/40 pl-6 ml-4">
+                        <div>
+                            <span class="text-gold-400 font-bold">c. 800–500 BCE</span>
+                            <h4 class="font-bold text-lg">The Sulba Sutras</h4>
+                            <p class="text-xs text-slate-300">Geometric principles and early geometric proofs for altar construction.</p>
+                        </div>
+                        <div>
+                            <span class="text-gold-400 font-bold">499 CE</span>
+                            <h4 class="font-bold text-lg">Aryabhatiya by Aryabhata</h4>
+                            <p class="text-xs text-slate-300">Introduction of sine tables, place-value decimal system, and astronomical calculations.</p>
+                        </div>
+                        <div>
+                            <span class="text-gold-400 font-bold">628 CE</span>
+                            <h4 class="font-bold text-lg">Brahmasphutasiddhanta by Brahmagupta</h4>
+                            <p class="text-xs text-slate-300">Formal rules for arithmetic operations with zero ('Shunya') and negative numbers.</p>
+                        </div>
+                        <div>
+                            <span class="text-gold-400 font-bold">1887–1920</span>
+                            <h4 class="font-bold text-lg">Srinivasa Ramanujan</h4>
+                            <p class="text-xs text-slate-300">Groundbreaking discoveries in number theory, infinite series, and mock theta functions.</p>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'leaderboard') {
+                let scores = JSON.parse(localStorage.getItem('expo_leaderboard') || '[{"name": "Aarav Sharma", "score": 100}, {"name": "Ananya Reddy", "score": 90}, {"name": "Rahul Verma", "score": 85}]');
+                let rows = scores.map((s, index) => `
+                    <tr class="border-b border-gold-500/10">
+                        <td class="py-3 px-4 font-bold text-gold-400">#${index + 1}</td>
+                        <td class="py-3 px-4">${s.name}</td>
+                        <td class="py-3 px-4 text-right font-bold text-gold-400">${s.score} pts</td>
+                    </tr>
+                `).join('');
 
-function openTopic(index){
+                html = `
+                    <h2 class="text-3xl font-cinzel font-bold gold-gradient-text mb-4"><i class="fas fa-trophy mr-2"></i> Live Expo Leaderboard</h2>
+                    <p class="text-slate-300 mb-6">Real-time scores from visitors who participated in the Math Challenge Arena.</p>
+                    <div class="bg-navy-800 rounded-xl border border-gold-500/30 overflow-hidden">
+                        <table class="w-full text-left">
+                            <thead class="bg-navy-900 text-gold-400 font-cinzel text-xs">
+                                <tr>
+                                    <th class="py-3 px-4">Rank</th>
+                                    <th class="py-3 px-4">Participant Name</th>
+                                    <th class="py-3 px-4 text-right">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${rows}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
 
-  if(index < 0 || index >= topics.length) return;
+            content.innerHTML = html;
+            modal.classList.remove('hidden');
+        }
 
-  renderTopic(index);
-
-  document.getElementById("home").style.display = "none";
-  document.getElementById("detail").style.display = "block";
-
-  window.scrollTo({top:0,behavior:"instant"});
-
-  history.pushState(
-    {page:"detail",index:index},
-    "",
-    "#topic-"+(index+1)
-  );
-
-}
-
-/* BACK TO HOME */
-
-function goHome(){
-
-  if(location.hash.startsWith("#topic-")){
-    history.back();
-  } else {
-    showHome();
-  }
-
-}
-
-function showHome(){
-
-  document.getElementById("detail").style.display = "none";
-  document.getElementById("home").style.display = "flex";
-
-  window.scrollTo({top:0,behavior:"instant"});
-
-}
-
-/* BROWSER BACK AND FORWARD */
-
-window.addEventListener("popstate",()=>{
-
-  if(location.hash.startsWith("#topic-")){
-
-    const index = Number(
-      location.hash.replace("#topic-","")
-    ) - 1;
-
-    if(index >= 0 && index < topics.length){
-
-      renderTopic(index);
-
-      document.getElementById("home").style.display = "none";
-      document.getElementById("detail").style.display = "block";
-
-      window.scrollTo({top:0,behavior:"instant"});
-
-    }
-
-  } else {
-
-    showHome();
-
-  }
-
-});
-
-/* OPEN A TOPIC DIRECTLY FROM ITS URL */
-
-function loadInitialPage(){
-
-  const match = location.hash.hash ? location.hash.match(/^#topic-(\d+)$/) : location.hash.match(/^#topic-(\d+)$/);
-  // simplified check
-  const hashVal = location.hash;
-  const match2 = hashVal.match(/^#topic-(\d+)$/);
-
-  if(match2){
-
-    const index = Number(match2[1])-1;
-
-    if(index >= 0 && index < topics.length){
-
-      renderTopic(index);
-
-      document.getElementById("home").style.display = "none";
-      document.getElementById("detail").style.display = "block";
-
-      return;
-
-    }
-
-  }
-
-  document.getElementById("home").style.display = "flex";
-  document.getElementById("detail").style.display = "none";
-
-}
-
-loadInitialPage();
-
-</script>
-
+        function submitQuizAnswer(isCorrect) {
+            const feedback = document.getElementById('quiz-feedback');
+            if (isCorrect) {
+                feedback.innerHTML = '<span class="text-green-400"><i class="fas fa-check-circle mr-1"></i> Correct! Aryabhata calculated $\\pi$ accurately.</span>';
+                let name = prompt("Enter your name for the Live Leaderboard:") || "Guest Student";
+                let scores = JSON.parse(localStorage.getItem('expo_leaderboard') || '[{"name": "Aarav Sharma", "score": 100}, {"name": "Ananya Reddy", "score": 90}, {"name": "Rahul Verma", "score": 85}]');
+                scores.push({ name: name, score: 100 });
+                scores.sort((a, b) => b.score - a.score);
+                localStorage.setItem('expo_leaderboard', JSON.stringify(scores));
+            } else {
+                feedback.innerHTML = '<span class="text-red-400"><i class="fas fa-times-circle mr-1"></i> Incorrect. The correct answer is Aryabhata!</span>';
+            }
+        }
+    </script>
 </body>
 </html>
